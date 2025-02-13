@@ -99,8 +99,8 @@ class FoodPostDetailView(generics.RetrieveUpdateDestroyAPIView):
 class FoodRequestListCreateView(generics.ListCreateAPIView):
     queryset = FoodRequest.objects.all()
     serializer_class = FoodRequestSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Allow get request without authentication
-    permission_classes = [permissions.IsAuthenticated]  # Allow get request without authentication
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(requested_by=self.request.user)
@@ -124,12 +124,12 @@ class FoodRequestRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
             raise PermissionDenied("You do not have permission to delete this request.")
 
 
-class FoodRequestListView(generics.ListAPIView):  # Use ListAPIView for GET only
+class FoodRequestListView(generics.ListAPIView):
     serializer_class = FoodRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        # Get requests where the user is the requester OR the poster of the food post
+        
         return FoodRequest.objects.filter(requested_by=user) | FoodRequest.objects.filter(food_post__posted_by=user)
 

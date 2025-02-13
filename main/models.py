@@ -75,12 +75,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='custom_user_set',  # Avoids conflict with auth.User.groups
+        related_name='custom_user_set',
         blank=True
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='custom_user_permissions_set',  # Avoids conflict with auth.User.user_permissions
+        related_name='custom_user_permissions_set',
         blank=True
     )
 
@@ -94,11 +94,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_food_posts_count(self):
         """Count the number of food posts created by this user."""
-        return self.posts.count()  # Use related_name='posts' from FoodPost
+        return self.posts.count()
 
     def get_food_requests_count(self):
         """Count the number of food requests made by this user."""
-        return self.foodrequest_set.count()  # Default related_name
+        return self.foodrequest_set.count()
 
 
 # class Member(models.Model):
@@ -122,7 +122,7 @@ class FoodPost(models.Model):
     description = models.TextField()
     quantity = models.PositiveIntegerField()
     # posted_by = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='posts')
-    posted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')  # Updated
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     expiration_date = models.DateTimeField(default=timezone.now)
     photo = models.ImageField(upload_to='food_posts/', null=True, blank=True)
     collection_point = models.CharField(max_length=255, null=False, default='Unknown')
@@ -135,7 +135,7 @@ class FoodPost(models.Model):
 class FoodRequest(models.Model):
     food_post = models.ForeignKey(FoodPost, on_delete=models.CASCADE)
     # requested_by = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, blank=True)
-    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Updated
+    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"Request for {self.food_post} by {self.requested_by or 'Unknown'}"

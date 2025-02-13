@@ -98,7 +98,7 @@ class FoodRequestSerializer(serializers.ModelSerializer):
     requested_by = UserSerializer(read_only=True)
     # requested_by = MemberSerializer(read_only=True)
     # food_post = FoodPostSerializer(read_only=True)
-    food_post = serializers.PrimaryKeyRelatedField(queryset=FoodPost.objects.all()) # Use PrimaryKeyRelatedField
+    food_post = serializers.PrimaryKeyRelatedField(queryset=FoodPost.objects.all())
     # food_post = FoodPostSerializer()
 
     class Meta:

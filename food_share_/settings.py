@@ -77,7 +77,7 @@ import dj_database_url
 env = environ.Env()
 
 
-# Specify the path to your .env file (make sure the path is correct)
+
 environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 DATABASES = {
     'default': dj_database_url.config(default=env('DATABASE_URL'))
@@ -199,7 +199,7 @@ REST_FRAMEWORK = {
 }
 
 
-# Add JWT settings
+
 from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=2),
@@ -214,13 +214,13 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-# CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # For development only
+
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Authentication settings
+
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Default authentication backend
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
-# For User Authentication, you may also need to add `rest_framework.authtoken` if using token-based authentication
+
